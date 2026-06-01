@@ -1,0 +1,215 @@
+---
+import VueCounter from '@/components/vue/counter/index.vue';
+import SvelteCounter from '@/components/svelte/counter/index.svelte';
+import { Counter as SolidCounter } from '@/components/solid/counter';
+import { Counter as PreactCounter } from '@/components/preact/counter';
+import { Counter as ReactCounter } from '@/components/react/counter';
+import Layout from '@/layouts/base-layout.astro';
+---
+
+<Layout title="Client Directives 演示">
+  <section>
+    <h2>Client Directives 对比</h2>
+    <p>演示所有 <code>client:*</code> 指令在不同框架下的水合行为。</p>
+
+    <!-- Vue -->
+    <h3 class="framework-title">🟢 Vue</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <h4>无指令 (Static)</h4>
+        <p class="desc">纯 HTML，无 JS，不可交互</p>
+        <VueCounter />
+      </div>
+      <div class="demo-card">
+        <h4>client:load</h4>
+        <p class="desc">页面加载后立即水合</p>
+        <VueCounter client:load />
+      </div>
+      <div class="demo-card">
+        <h4>client:idle</h4>
+        <p class="desc">页面空闲时水合</p>
+        <VueCounter client:idle />
+      </div>
+      <div class="demo-card">
+        <h4>client:idle (timeout)</h4>
+        <p class="desc">最多等 200ms 强制水合</p>
+        <VueCounter client:idle={{ timeout: 200 }} />
+      </div>
+      <div class="demo-card">
+        <h4>client:visible</h4>
+        <p class="desc">进入视口时水合</p>
+        <VueCounter client:visible />
+      </div>
+      <div class="demo-card">
+        <h4>client:visible (rootMargin)</h4>
+        <p class="desc">距视口 200px 提前水合</p>
+        <VueCounter client:visible={{ rootMargin: '200px' }} />
+      </div>
+      <div class="demo-card">
+        <h4>client:media</h4>
+        <p class="desc">窗口 ≤ 768px 时水合</p>
+        <VueCounter client:media="(max-width: 768px)" />
+      </div>
+      <div class="demo-card">
+        <h4>client:only</h4>
+        <p class="desc">跳过 SSR，纯客户端渲染</p>
+        <VueCounter client:only="vue" />
+      </div>
+      <div class="demo-card">
+        <h4>client:only + fallback</h4>
+        <p class="desc">客户端渲染 + 加载占位</p>
+        <VueCounter client:only="vue">
+          <div slot="fallback" class="fallback">⏳ Loading...</div>
+        </VueCounter>
+      </div>
+    </div>
+
+    <!-- Svelte -->
+    <h3 class="framework-title">🟠 Svelte</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <h4>无指令 (Static)</h4>
+        <p class="desc">纯 HTML，无 JS，不可交互</p>
+        <SvelteCounter />
+      </div>
+      <div class="demo-card">
+        <h4>client:load</h4>
+        <p class="desc">页面加载后立即水合</p>
+        <SvelteCounter client:load />
+      </div>
+      <div class="demo-card">
+        <h4>client:idle</h4>
+        <p class="desc">页面空闲时水合</p>
+        <SvelteCounter client:idle />
+      </div>
+      <div class="demo-card">
+        <h4>client:visible</h4>
+        <p class="desc">进入视口时水合</p>
+        <SvelteCounter client:visible />
+      </div>
+      <div class="demo-card">
+        <h4>client:media</h4>
+        <p class="desc">窗口 ≤ 768px 时水合</p>
+        <SvelteCounter client:media="(max-width: 768px)" />
+      </div>
+      <div class="demo-card">
+        <h4>client:only</h4>
+        <p class="desc">跳过 SSR，纯客户端渲染</p>
+        <SvelteCounter client:only="svelte" />
+      </div>
+    </div>
+
+    <!-- Solid -->
+    <h3 class="framework-title">🔵 Solid</h3>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <h4>无指令 (Static)</h4>
+        <p class="desc">纯 HTML，无 JS，不可交互</p>
+        <SolidCounter />
+      </div>
+      <div class="demo-card">
+        <h4>client:load</h4>
+        <p class="desc">页面加载后立即水合</p>
+        <SolidCounter client:load />
+      </div>
+      <div class="demo-card">
+        <h4>client:idle</h4>
+        <p class="desc">页面空闲时水合</p>
+        <SolidCounter client:idle />
+      </div>
+      <div class="demo-card">
+        <h4>client:visible</h4>
+        <p class="desc">进入视口时水合</p>
+        <SolidCounter client:visible />
+      </div>
+      <div class="demo-card">
+        <h4>client:media</h4>
+        <p class="desc">窗口 ≤ 768px 时水合</p>
+        <SolidCounter client:media="(max-width: 768px)" />
+      </div>
+      <div class="demo-card">
+        <h4>client:only</h4>
+        <p class="desc">跳过 SSR，纯客户端渲染</p>
+        <SolidCounter client:only="solid-js" />
+      </div>
+    </div>
+
+    <!-- Preact -->
+    <h3 class="framework-title">🟣 Preact</h3>
+    <p class="note">
+      ⚠️ 多 JSX 框架共存时，Preact compat SSR 与 Solid 渲染器冲突，仅 <code>client:only</code> 和无指令可用
+    </p>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <h4>无指令 (Static)</h4>
+        <p class="desc">纯 HTML，无 JS，不可交互</p>
+        <PreactCounter />
+      </div>
+      <div class="demo-card">
+        <h4>client:only</h4>
+        <p class="desc">跳过 SSR，纯客户端渲染</p>
+        <PreactCounter client:only="preact" />
+      </div>
+    </div>
+
+    <!-- React (via @preact/compat) -->
+    <h3 class="framework-title">⚛️ React (via @preact/compat)</h3>
+    <p class="note">⚠️ 底层由 Preact compat 渲染，同样受限</p>
+    <div class="demo-grid">
+      <div class="demo-card">
+        <h4>无指令 (Static)</h4>
+        <p class="desc">纯 HTML，无 JS，不可交互</p>
+        <ReactCounter />
+      </div>
+      <div class="demo-card">
+        <h4>client:only</h4>
+        <p class="desc">跳过 SSR，纯客户端渲染</p>
+        <ReactCounter client:only="react" />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .framework-title {
+    margin: 32px 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #eee;
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .demo-card {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  .demo-card h4 {
+    margin: 0 0 4px;
+    font-size: 0.95em;
+  }
+
+  .desc {
+    font-size: 0.8em;
+    color: #888;
+    margin: 0 0 10px;
+  }
+
+  .note {
+    font-size: 0.85em;
+    color: #b88a00;
+    margin: 0 0 8px;
+  }
+
+  .fallback {
+    padding: 8px;
+    text-align: center;
+    color: #999;
+  }
+</style>

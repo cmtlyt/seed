@@ -1,0 +1,16 @@
+---
+
+---
+
+<slot />
+
+<script>
+  import Alpine from 'alpinejs';
+
+  // @ts-expect-error Alpine 应该挂载到全局使用
+  if (!globalThis.Alpine) {
+    // @ts-expect-error Alpine 应该挂载到全局使用
+    globalThis.Alpine = Alpine;
+    Alpine.start();
+  }
+</script>

@@ -1,0 +1,27 @@
+---
+import AstroButton from '@/components/astro/button/index.astro';
+import { Button as PreactButton } from '@/components/preact/button';
+import { Button as ReactButton } from '@/components/react/button';
+import { Button as SolidButton } from '@/components/solid/button';
+import SvelteButton from '@/components/svelte/button/index.svelte';
+import VueButton from '@/components/vue/button/index.vue';
+import Layout from '@/layouts/base-layout.astro';
+---
+
+<Layout title="Button 测试">
+  <section>
+    <h2>静态按钮</h2>
+    <span>React</span>
+    <ReactButton client:idle style={{ backgroundColor: 'red' }}>ReactButton</ReactButton>
+    <span>Astro</span>
+    <AstroButton style={{ backgroundColor: 'blue' }}>AstroButton</AstroButton>
+    <span>Vue</span>
+    <VueButton style={{ backgroundColor: 'yellow' }}>VueButton</VueButton>
+    <span>Preact</span>
+    <PreactButton style={{ backgroundColor: 'pink' }}>PreactButton</PreactButton>
+    <span>Solid</span>
+    <SolidButton style={{ 'background-color': 'green' }}>SolidButton</SolidButton>
+    <span>Svelte</span>
+    <SvelteButton style="background-color: orange">SvelteButton</SvelteButton>
+  </section>
+</Layout>

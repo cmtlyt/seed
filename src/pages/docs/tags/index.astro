@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import TagList from '@/components/astro/tag-list/index.astro';
+import Layout from '@/layouts/base-layout.astro';
+import styles from './index.module.css';
+
+const docs = await getCollection('docs');
+const tagCountMap = new Map<string, number>();
+
+for (const doc of docs) {
+  for (const tag of doc.data.tags ?? []) {
+    tagCountMap.set(tag, (tagCountMap.get(tag) ?? 0) + 1);
+  }
+}
+
+const tags = [...tagCountMap.keys()].sort((a, b) => (tagCountMap.get(b) ?? 0) - (tagCountMap.get(a) ?? 0));
+---
+
+<Layout title="标签列表">
+  <section>
+    <h2>🏷️ 所有标签</h2>
+    <TagList
+      tags={tags}
+      class={styles.tagList}
+      tagProps={{ class: styles.tagItem }}
+      renderLabel={(tag) => `${tag} (${tagCountMap.get(tag) ?? 0})`}
+    />
+    <hr />
+    <a href="/docs">← 返回文档列表</a>
+  </section>
+</Layout>

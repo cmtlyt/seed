@@ -1,0 +1,27 @@
+---
+import { TodoList as ReactTodoList } from '@/components/react/todo-list';
+import { TodoList as PreactTodoList } from '@/components/preact/todo-list';
+import { TodoList as SolidTodoList } from '@/components/solid/todo-list';
+import VueTodoList from '@/components/vue/todo-list/index.vue';
+import SvelteTodoList from '@/components/svelte/todo-list/index.svelte';
+import AlpineTodoList from '@/components/alpine/todo-list/index.astro';
+import Layout from '@/layouts/base-layout.astro';
+---
+
+<Layout title="Todo List 测试">
+  <section>
+    <h2>Todo List</h2>
+    <span>React</span>
+    <ReactTodoList client:only="react" />
+    <span>Preact</span>
+    <PreactTodoList client:only="preact" />
+    <span>Solid</span>
+    <SolidTodoList client:only="solid-js" />
+    <span>Vue</span>
+    <VueTodoList client:only="vue" />
+    <span>Svelte</span>
+    <SvelteTodoList client:only="svelte" />
+    <span>Alpine</span>
+    <AlpineTodoList />
+  </section>
+</Layout>

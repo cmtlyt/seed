@@ -1,0 +1,46 @@
+---
+import BaseLayout from '@/layouts/base-layout.astro';
+---
+
+<BaseLayout title="500 - 服务器错误">
+  <div class="server-error">
+    <h1>500</h1>
+    <p>抱歉，服务器内部出现了错误。</p>
+    <a href="/">返回首页</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .server-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 6rem;
+    margin: 0;
+    color: #c0392b;
+  }
+
+  p {
+    font-size: 1.25rem;
+    color: #888;
+    margin: 1rem 0 2rem;
+  }
+
+  a {
+    padding: 0.5rem 1.5rem;
+    background: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  a:hover {
+    background: #555;
+  }
+</style>

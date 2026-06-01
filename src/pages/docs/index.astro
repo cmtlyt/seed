@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import TagList from '@/components/astro/tag-list/index.astro';
+import Layout from '@/layouts/base-layout.astro';
+
+const docs = await getCollection('docs');
+---
+
+<Layout title="Docs 列表">
+  <section>
+    <h2>📚 文档列表</h2>
+    <p><a href="/docs/tags">🏷️ 查看所有标签</a></p>
+    <ul>
+      {
+        docs.map((doc) => (
+          <li>
+            <a href={`/docs/${doc.id}`}>
+              <strong>{doc.data.title}</strong>
+            </a>
+            <span> — {doc.data.description}</span>
+            <br />
+            <small>
+              作者: {doc.data.author} | 发布: {doc.data.pubDate.toLocaleDateString('zh-CN')}
+            </small>
+            {doc.data.tags && <TagList tags={doc.data.tags} />}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>

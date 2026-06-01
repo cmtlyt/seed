@@ -1,17 +1,82 @@
 {
   "name": "template",
-  "type": "module",
   "version": "0.0.1",
-  "engines": {
-    "node": ">=22.12.0"
-  },
+  "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --mode development",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "lint": "oxlint",
+    "lint:github": "oxlint --format=github",
+    "lint:fix": "oxlint --fix",
+    "fmt": "pnpm run fmt:code && pnpm run fmt:astro",
+    "fmt:code": "oxfmt --no-error-on-unmatched-pattern",
+    "fmt:astro": "prettier --write \"**/*.astro\"",
+    "fmt:check": "oxfmt --no-error-on-unmatched-pattern --check && prettier --check \"**/*.astro\"",
+    "astro": "astro",
+    "astro:upgrade": "pnpm dlx @astrojs/upgrade",
+    "prepare": "husky"
   },
   "dependencies": {
-    "astro": "^6.3.8"
+    "@cmtlyt/logger": "^0.5.0",
+    "alpinejs": "^3.15.12",
+    "astro": "^6.4.2",
+    "preact": "^10.29.2",
+    "react": "npm:@preact/compat@latest",
+    "react-dom": "npm:@preact/compat@latest",
+    "solid-js": "^1.9.13",
+    "svelte": "^5.55.10",
+    "vue": "^3.5.35",
+    "yoctocolors": "^2.1.2"
+  },
+  "devDependencies": {
+    "@astrojs/mdx": "^6.0.1",
+    "@astrojs/node": "^10.1.2",
+    "@astrojs/partytown": "^2.1.7",
+    "@astrojs/preact": "^5.1.4",
+    "@astrojs/react": "^5.0.6",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/solid-js": "^6.0.1",
+    "@astrojs/svelte": "^8.1.2",
+    "@astrojs/ts-plugin": "^1.10.9",
+    "@astrojs/vue": "^6.0.1",
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "@types/alpinejs": "^3.13.11",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "changelogithub": "^14.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.5",
+    "oxfmt": "^0.52.0",
+    "oxlint": "^1.67.0",
+    "prettier": "3.8.3",
+    "prettier-plugin-astro": "0.14.1",
+    "solid-devtools": "^0.34.5",
+    "typescript": "^6.0.3"
+  },
+  "overrides": {
+    "react": "npm:@preact/compat@latest",
+    "react-dom": "npm:@preact/compat@latest"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,svelte}": [
+      "pnpm run fmt:code",
+      "pnpm run lint"
+    ],
+    "*.astro": [
+      "pnpm run fmt:astro",
+      "pnpm run lint"
+    ]
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=11"
+    }
+  },
+  "engines": {
+    "node": ">=24.14.1"
   }
 }

@@ -1,0 +1,104 @@
+---
+import { Counter as ReactCounter } from '@/components/react/counter';
+import { Counter as PreactCounter } from '@/components/preact/counter';
+import { Counter as SolidCounter } from '@/components/solid/counter';
+import VueCounter from '@/components/vue/counter/index.vue';
+import SvelteCounter from '@/components/svelte/counter/index.svelte';
+import AstroCounter from '@/components/astro/counter/index.astro';
+import AlpineCounter from '@/components/alpine/counter/index.astro';
+import Layout from '@/layouts/base-layout.astro';
+---
+
+<Layout title="Counter 测试">
+  <section>
+    <h2>Counter</h2>
+
+    <h3>React</h3>
+    <div class="compare">
+      <div>
+        <span>Hydrated (client:only)</span>
+        <ReactCounter client:only="react" />
+      </div>
+      <div>
+        <span>Static (no hydration)</span>
+        <ReactCounter />
+      </div>
+    </div>
+
+    <h3>Preact</h3>
+    <div class="compare">
+      <div>
+        <span>Hydrated (client:only)</span>
+        <PreactCounter client:only="preact" />
+      </div>
+      <div>
+        <span>Static (no hydration)</span>
+        <PreactCounter />
+      </div>
+    </div>
+
+    <h3>Solid</h3>
+    <div class="compare">
+      <div>
+        <span>Hydrated (client:only)</span>
+        <SolidCounter client:only="solid-js" />
+      </div>
+      <div>
+        <span>Static (no hydration)</span>
+        <SolidCounter />
+      </div>
+    </div>
+
+    <h3>Vue</h3>
+    <div class="compare">
+      <div>
+        <span>Hydrated (client:only)</span>
+        <VueCounter client:only="vue" />
+      </div>
+      <div>
+        <span>Static (no hydration)</span>
+        <VueCounter />
+      </div>
+    </div>
+
+    <h3>Svelte</h3>
+    <div class="compare">
+      <div>
+        <span>Hydrated (client:only)</span>
+        <SvelteCounter client:only="svelte" />
+      </div>
+      <div>
+        <span>Static (no hydration)</span>
+        <SvelteCounter />
+      </div>
+    </div>
+
+    <h3>Astro</h3>
+    <AstroCounter />
+
+    <h3>Alpine</h3>
+    <AlpineCounter />
+  </section>
+</Layout>
+
+<style>
+  .compare {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 16px;
+  }
+
+  .compare > div {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+
+  .compare > div > span {
+    display: block;
+    font-size: 0.85em;
+    color: #888;
+    margin-bottom: 8px;
+  }
+</style>

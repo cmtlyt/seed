@@ -1,0 +1,24 @@
+---
+import { Timer as ReactTimer } from '@/components/react/timer';
+import { Timer as PreactTimer } from '@/components/preact/timer';
+import { Timer as SolidTimer } from '@/components/solid/timer';
+import VueTimer from '@/components/vue/timer/index.vue';
+import SvelteTimer from '@/components/svelte/timer/index.svelte';
+import Layout from '@/layouts/base-layout.astro';
+---
+
+<Layout title="Timer 测试">
+  <section>
+    <h2>Timer</h2>
+    <span>React</span>
+    <ReactTimer client:only="react" />
+    <span>Preact</span>
+    <PreactTimer client:only="preact" />
+    <span>Solid</span>
+    <SolidTimer client:only="solid-js" />
+    <span>Vue</span>
+    <VueTimer client:only="vue" />
+    <span>Svelte</span>
+    <SvelteTimer client:only="svelte" />
+  </section>
+</Layout>

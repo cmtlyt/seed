@@ -1,0 +1,39 @@
+---
+import { EXAMPLE_BOOL, EXAMPLE_ENUM, EXAMPLE_FLOAT, EXAMPLE_INT, EXAMPLE_STR } from 'astro:env/server';
+import BaseLayout from '../layouts/base-layout.astro';
+
+const importEnv = JSON.stringify(
+  import.meta.env,
+  (key, value) => (!key || key.startsWith('EXAMPLE_') ? value : undefined),
+  2,
+);
+---
+
+<BaseLayout>
+  <h1>环境变量测试</h1>
+  <ul>
+    <li>
+      <span>EXAMPLE_STR: {EXAMPLE_STR} / {typeof EXAMPLE_STR}</span>
+    </li>
+    <li>
+      <span>EXAMPLE_INT: {EXAMPLE_INT} / {typeof EXAMPLE_INT}</span>
+    </li>
+    <li>
+      <span>EXAMPLE_FLOAT: {EXAMPLE_FLOAT} / {typeof EXAMPLE_FLOAT}</span>
+    </li>
+    <li>
+      <span>EXAMPLE_BOOL: {EXAMPLE_BOOL} / {typeof EXAMPLE_BOOL}</span>
+    </li>
+    <li>
+      <span>EXAMPLE_ENUM: {EXAMPLE_ENUM} / {typeof EXAMPLE_ENUM}</span>
+    </li>
+  </ul>
+  <pre>import.meta.env: {importEnv}</pre>
+</BaseLayout>
+
+<style>
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+</style>

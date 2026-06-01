@@ -1,0 +1,24 @@
+---
+import { FetchData as ReactFetchData } from '@/components/react/fetch-data';
+import { FetchData as PreactFetchData } from '@/components/preact/fetch-data';
+import { FetchData as SolidFetchData } from '@/components/solid/fetch-data';
+import VueFetchData from '@/components/vue/fetch-data/index.vue';
+import SvelteFetchData from '@/components/svelte/fetch-data/index.svelte';
+import Layout from '@/layouts/base-layout.astro';
+---
+
+<Layout title="Fetch Data 测试">
+  <section>
+    <h2>Fetch Data</h2>
+    <span>React</span>
+    <ReactFetchData client:only="react" />
+    <span>Preact</span>
+    <PreactFetchData client:only="preact" />
+    <span>Solid</span>
+    <SolidFetchData client:only="solid-js" />
+    <span>Vue</span>
+    <VueFetchData client:only="vue" />
+    <span>Svelte</span>
+    <SvelteFetchData client:only="svelte" />
+  </section>
+</Layout>

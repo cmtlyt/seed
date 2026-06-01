@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/base-layout.astro';
+import sampleImage from '@/assets/sample-image.png';
+---
+
+<BaseLayout title="Image 优化测试">
+  <h1>Image 组件优化示例</h1>
+
+  <section>
+    <h2>本地图片 — 自动优化</h2>
+    <p>使用 <code>&lt;Image /&gt;</code> 组件导入本地图片，Astro 自动压缩并转为 WebP：</p>
+    <Image src={sampleImage} alt="示例渐变图片" />
+    <p>
+      <small>原始: {sampleImage.width}×{sampleImage.height} PNG → 输出: 优化后的 WebP</small>
+    </p>
+  </section>
+
+  <section>
+    <h2>指定尺寸 — 缩放</h2>
+    <p>通过 <code>width</code> 属性缩小图片：</p>
+    <Image src={sampleImage} alt="缩小到 100px 宽" width={100} />
+  </section>
+
+  <section>
+    <h2>指定格式 — 输出 AVIF</h2>
+    <Image src={sampleImage} alt="AVIF 格式输出" format="avif" />
+  </section>
+
+  <section>
+    <h2>原生 &lt;img&gt; 对比（无优化）</h2>
+    <img src={sampleImage.src} alt="原生 img 标签，无优化" width="200" height="150" />
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  img {
+    display: block;
+    margin: 0.5rem 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  code {
+    background: #f0f0f0;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+</style>

@@ -1,0 +1,24 @@
+---
+import { Tabs as ReactTabs } from '@/components/react/tabs';
+import { Tabs as PreactTabs } from '@/components/preact/tabs';
+import { Tabs as SolidTabs } from '@/components/solid/tabs';
+import VueTabs from '@/components/vue/tabs/index.vue';
+import SvelteTabs from '@/components/svelte/tabs/index.svelte';
+import Layout from '@/layouts/base-layout.astro';
+---
+
+<Layout title="Tabs 测试">
+  <section>
+    <h2>Tabs</h2>
+    <span>React</span>
+    <ReactTabs client:only="react" />
+    <span>Preact</span>
+    <PreactTabs client:only="preact" />
+    <span>Solid</span>
+    <SolidTabs client:only="solid-js" />
+    <span>Vue</span>
+    <VueTabs client:only="vue" />
+    <span>Svelte</span>
+    <SvelteTabs client:only="svelte" />
+  </section>
+</Layout>

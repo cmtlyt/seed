@@ -1,0 +1,27 @@
+---
+import AlpineProvider from '@/components/alpine/alpine-provider/index.astro';
+---
+
+<AlpineProvider />
+
+<div class="todo-list" x-data="{ items: [], input: '' }">
+  <div class="todo-input">
+    <input
+      type="text"
+      x-model="input"
+      aria-label="New todo item"
+      placeholder="Add a todo..."
+      x-on:keydown.enter="if (input.trim()) { items.push(input.trim()); input = ''; }"
+    />
+    <button type="button" x-on:click="if (input.trim()) { items.push(input.trim()); input = ''; }"> Add </button>
+  </div>
+  <ul>
+    <template x-for="(item, index) in items" x-bind:key="index">
+      <li>
+        <span x-text="item"></span>
+        <button type="button" x-on:click="items.splice(index, 1)">×</button>
+      </li>
+    </template>
+  </ul>
+  <p x-show="items.length === 0">No items yet</p>
+</div>
