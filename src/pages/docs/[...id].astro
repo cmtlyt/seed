@@ -12,8 +12,6 @@ export const getStaticPaths = (async () => {
   }));
 }) satisfies GetStaticPaths;
 
-export const prerender = true;
-
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { doc } = Astro.props as Props;

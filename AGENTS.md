@@ -7,7 +7,7 @@ This is an Astro multi-framework template project that demonstrates how to use *
 - **Runtime**: Node.js >= 24.14.1 (`.nvmrc`: `24`)
 - **Package Manager**: pnpm >= 11
 - **Build Tool**: Astro 6.x (Vite-based)
-- **Output Mode**: `server` (SSR via `@astrojs/node` standalone adapter)
+- **Output Mode**: `static` (pre-rendered at build time by default, with `@astrojs/node` standalone adapter for opt-in SSR)
 - **Additional Integrations**: MDX, Partytown, Sitemap, RSS
 
 ## Multi-Framework Conventions
@@ -193,6 +193,54 @@ You can nest hydrated components inside other hydrated components in `.astro` fi
 
 **Restriction**: inside a framework component file (`.jsx`, `.vue`, etc.), you cannot import `.astro` components or components from other frameworks. Use slots to compose them from `.astro` files instead.
 
+## Prerender Rules
+
+This project uses `output: 'static'` with `@astrojs/node` adapter — **all pages are pre-rendered at build time by default**, but individual pages/endpoints can opt out to SSR.
+
+### If adapter is enabled (`adapter: node(...)` configured)
+
+- All pages default to `prerender = true` (static generation at build time).
+- Individual pages/endpoints can **opt out** to SSR by adding `export const prerender = false` in the frontmatter — these pages will be rendered on each request at runtime.
+- **Dynamic routes** with `prerender = true` (default) must export `getStaticPaths()`. Dynamic routes with `prerender = false` do **not** need `getStaticPaths()` — params come from the live request.
+- API routes with `prerender = false` handle **live requests** at runtime. API routes without it produce static JSON files at build time.
+- Middleware runs at build time for prerendered pages, and at **runtime** for SSR pages.
+
+### If adapter is NOT enabled (no `adapter` configured)
+
+- **All** pages and endpoints are statically generated — no SSR is possible.
+- `export const prerender = false` is **not allowed** and will cause a build error.
+- **All dynamic routes** must export `getStaticPaths()`.
+- API routes produce **static files only** at build time.
+- Middleware runs at build time only.
+
+### Dynamic route example
+
+```astro
+---
+// src/pages/docs/[slug].astro — prerendered (default)
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'getting-started' } },
+    { params: { slug: 'advanced' } },
+  ];
+}
+
+const { slug } = Astro.params;
+---
+<h1>{slug}</h1>
+```
+
+```astro
+---
+// src/pages/user/[id].astro — SSR (requires adapter)
+export const prerender = false;
+
+const { id } = Astro.params;
+const user = await fetchUser(id);
+---
+<h1>{user.name}</h1>
+```
+
 ## API Routes
 
 Server endpoints live in `src/pages/api/`. Export named HTTP method functions (`GET`, `POST`, `PUT`, `DELETE`, etc.):
@@ -208,7 +256,8 @@ export function GET(context: APIContext) {
 }
 ```
 
-This project uses `output: 'server'` with `@astrojs/node` (standalone mode), so API routes run at **runtime** and handle live requests.
+- **If adapter is enabled**: endpoints with `export const prerender = false` handle **live requests** at runtime. Endpoints without it produce static files at build time.
+- **If adapter is NOT enabled**: all endpoints produce **static files only** at build time.
 
 ## Middleware
 
@@ -228,7 +277,8 @@ export const onRequest = defineMiddleware((context, next) => {
 
 - **`context.locals`**: typed via `App.Locals` in `src/env.d.ts` (currently: `requestedAt`, `pathname`), accessible in all pages/endpoints via `Astro.locals`
 - **Chaining**: use `sequence()` from `astro:middleware` to compose multiple middleware
-- **Server mode**: middleware runs on every request at runtime
+- **If adapter is enabled**: middleware runs at build time for prerendered pages, and at **runtime** for SSR pages (`prerender = false`)
+- **If adapter is NOT enabled**: middleware runs at build time during prerendering only — it does **not** run at runtime
 
 ## Image Optimization
 
@@ -275,7 +325,7 @@ This project uses Astro's experimental logger feature:
 ```ts
 experimental: {
   logger: {
-    entrypoint: 'src/libs/logger/node-logger.ts',
+    entrypoint: 'src/libs/logger/node-logger.js',
     config: { level: 'info' },
   },
 }

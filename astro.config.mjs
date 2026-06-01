@@ -7,9 +7,9 @@ import solidJs from '@astrojs/solid-js';
 import svelte from '@astrojs/svelte';
 import vue from '@astrojs/vue';
 import { defineConfig, envField } from 'astro/config';
-import node from '@astrojs/node';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import node from '@astrojs/node';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const publicEnv = { access: 'public', context: 'server', optional: true };
@@ -41,15 +41,13 @@ export default defineConfig({
     sitemap({}),
   ],
 
-  output: 'server',
-
   adapter: node({
     mode: 'standalone',
   }),
 
   experimental: {
     logger: {
-      entrypoint: path.resolve(__dirname, 'src', 'libs', 'logger', 'node-logger.ts'),
+      entrypoint: path.resolve(__dirname, 'src', 'libs', 'logger', 'node-logger.js'),
       config: {
         level: 'info',
       },
