@@ -1,5 +1,5 @@
 import { defineMiddleware } from 'astro:middleware';
-import { logger } from '@logger/node-logger';
+import { logger } from '@logger';
 
 export const onRequest = defineMiddleware((context, next) => {
   const startTime = performance.now();

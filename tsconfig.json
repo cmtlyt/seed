@@ -4,8 +4,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./*"],
-      "@logger": ["./src/libs/logger/index.ts"],
-      "@logger/*": ["./src/libs/logger/*"]
+      "@logger": ["./src/libs/logger/index.js"]
     },
     "plugins": [{ "name": "@astrojs/ts-plugin" }]
   }

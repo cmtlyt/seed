@@ -47,7 +47,7 @@ export default defineConfig({
 
   experimental: {
     logger: {
-      entrypoint: path.resolve(__dirname, 'src', 'libs', 'logger', 'node-logger.js'),
+      entrypoint: path.resolve(__dirname, 'src', 'libs', 'logger', 'index.js'),
       config: {
         level: 'info',
       },

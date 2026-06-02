@@ -1,15 +1,16 @@
 import { createLogger } from '@cmtlyt/logger';
+import { webConsoleAdapter } from '@cmtlyt/logger/adapters/web';
 import { nodeConsoleAdapter } from '@cmtlyt/logger/adapters/node';
 import { matchesLevel } from 'astro/logger';
 
 /**
- * 需要和 base.js 保持一致
- * 因为 astro build 的时候直接使用 import 无法读取相对路径
- * 只能写一份静态配置了
- * 等后续 astro 修复后合并为一个
- *
- * @type {import('./types').CreateLoggerOptions<import('./types').TransformData>}
+ * @typedef {import('./types').Logger} Logger
+ * @typedef {import('./types').TransformData} TransformData
+ * @typedef {import('./types').CreateLoggerOptions<TransformData>} CreateLoggerOptions
+ * @typedef {import('@cmtlyt/logger/adapters/node').NodeConsoleAdapterOptions<TransformData>} NodeConsoleAdapterOptions
  */
+
+/** @type {CreateLoggerOptions} */
 const options = {
   transform(options) {
     const { type, messages: oriMessages } = options;
@@ -27,25 +28,30 @@ const options = {
   },
 };
 
-/**
- * @type {import('./types').Logger}
- */
+/** @type {NodeConsoleAdapterOptions} */
+const nodeAdapterOptions = {
+  enableColors: true,
+  getLabel(option) {
+    return option.transformData.pointer;
+  },
+  formatDate(date) {
+    return date.toLocaleTimeString();
+  },
+  getMessages(option) {
+    return option.messages.slice(1);
+  },
+  format: '%date [%type#%label] %message -- %othermessages',
+};
+
+/** @type {Logger} */
 const logger = createLogger({
   ...options,
   outputAdapters: [
-    nodeConsoleAdapter({
-      enableColors: true,
-      getLabel(option) {
-        return option.transformData.pointer;
-      },
-      formatDate(date) {
-        return date.toLocaleTimeString();
-      },
-      getMessages(option) {
-        return option.messages.slice(1);
-      },
-      format: '%date [%type#%label] %message -- %othermessages',
+    webConsoleAdapter({
+      allowTypes: ['appear'],
+      consoleLevel: 'debug',
     }),
+    nodeConsoleAdapter(nodeAdapterOptions),
   ],
 });
 

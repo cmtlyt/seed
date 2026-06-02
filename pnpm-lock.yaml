@@ -208,8 +208,8 @@ importers:
   .:
     dependencies:
       '@cmtlyt/logger':
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.6.1
+        version: 0.6.1
       alpinejs:
         specifier: ^3.15.12
         version: 3.15.12
@@ -589,8 +589,8 @@ packages:
     resolution: {integrity: sha512-S0My7XPGIgpRWMDG8uRqalbgT+a6FmCUdOW+HaIOVVpUPHOb7RrpvjTjiODadKp06fsrVDJZlIzc6yCTp4AnxA==}
     engines: {node: '>= 20.12.0'}
 
-  '@cmtlyt/logger@0.5.0':
-    resolution: {integrity: sha512-eogo1+NDHpKBwnPi00jokKqWGGKWgMPFtUyIyIIbmUQTM+RYU4ZTGsd8SK1d+lAve97ImoUPBijBBecpCTtb7w==}
+  '@cmtlyt/logger@0.6.1':
+    resolution: {integrity: sha512-n6OzfyASS6wIfVSu1kpNvL8X4XxWjXBlLwct+S1onYMNzoj9oyou1VQuLL5O7ieMvnMJb5WwJOOLkL8u91AtZA==}
 
   '@commitlint/cli@21.0.1':
     resolution: {integrity: sha512-8vq10krmbJwBkvzXKhbs4o4JQEVscd3pqOlWuDUaDBwbeL694/P33UC29tZQFTAgPU9fVJ2+f2m3zw16yKWxHg==}
@@ -4200,7 +4200,7 @@ snapshots:
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
 
-  '@cmtlyt/logger@0.5.0':
+  '@cmtlyt/logger@0.6.1':
     optionalDependencies:
       yoctocolors: 2.1.2
 
