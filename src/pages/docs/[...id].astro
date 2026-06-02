@@ -3,6 +3,7 @@ import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 import { getCollection, render } from 'astro:content';
 import TagList from '@/components/astro/tag-list/index.astro';
 import Layout from '@/layouts/base-layout.astro';
+import { withBase } from '@/utils/url';
 
 export const getStaticPaths = (async () => {
   const docs = await getCollection('docs');
@@ -37,6 +38,6 @@ const { Content } = await render(doc);
     <hr />
     <Content />
     <hr />
-    <a href="/docs">← 返回文档列表</a>
+    <a href={withBase('/docs')}>← 返回文档列表</a>
   </article>
 </Layout>

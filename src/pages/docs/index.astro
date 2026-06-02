@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import TagList from '@/components/astro/tag-list/index.astro';
 import Layout from '@/layouts/base-layout.astro';
+import { withBase } from '@/utils/url';
 
 const docs = await getCollection('docs');
 ---
@@ -9,12 +10,12 @@ const docs = await getCollection('docs');
 <Layout title="Docs 列表">
   <section>
     <h2>📚 文档列表</h2>
-    <p><a href="/docs/tags">🏷️ 查看所有标签</a></p>
+    <p><a href={withBase('/docs/tags')}>🏷️ 查看所有标签</a></p>
     <ul>
       {
         docs.map((doc) => (
           <li>
-            <a href={`/docs/${doc.id}`}>
+            <a href={withBase(`/docs/${doc.id}`)}>
               <strong>{doc.data.title}</strong>
             </a>
             <span> — {doc.data.description}</span>

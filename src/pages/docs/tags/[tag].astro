@@ -3,6 +3,7 @@ import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 import { getCollection } from 'astro:content';
 import TagList from '@/components/astro/tag-list/index.astro';
 import Layout from '@/layouts/base-layout.astro';
+import { withBase } from '@/utils/url';
 
 export const getStaticPaths = (async () => {
   const docs = await getCollection('docs');
@@ -36,7 +37,7 @@ const { tag, docs } = Astro.props as Props;
       {
         docs.map((doc) => (
           <li>
-            <a href={`/docs/${doc.id}`}>
+            <a href={withBase(`/docs/${doc.id}`)}>
               <strong>{doc.data.title}</strong>
             </a>
             <span> — {doc.data.description}</span>
@@ -50,6 +51,6 @@ const { tag, docs } = Astro.props as Props;
       }
     </ul>
     <hr />
-    <a href="/docs/tags">← 返回标签列表</a>
+    <a href={withBase('/docs/tags')}>← 返回标签列表</a>
   </section>
 </Layout>

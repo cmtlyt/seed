@@ -1,4 +1,6 @@
 ---
+import { withBase } from '@/utils/url';
+
 const { title = '标题' } = Astro.props;
 ---
 
@@ -6,8 +8,8 @@ const { title = '标题' } = Astro.props;
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="icon" href={withBase('/favicon.ico')} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -15,11 +17,11 @@ const { title = '标题' } = Astro.props;
   <body>
     <header>
       <nav>
-        <a href="/">Home</a>
-        <a href="/comp-test/">Comp Example</a>
-        <a href="/env-test">Env Example</a>
-        <a href="/image-test">Image Example</a>
-        <a href="/docs">Docs</a>
+        <a href={withBase('/')}>Home</a>
+        <a href={withBase('/comp-test/')}>Comp Example</a>
+        <a href={withBase('/env-test')}>Env Example</a>
+        <a href={withBase('/image-test')}>Image Example</a>
+        <a href={withBase('/docs')}>Docs</a>
       </nav>
     </header>
     <slot />
